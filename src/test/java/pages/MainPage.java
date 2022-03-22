@@ -8,16 +8,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.List;
-
-public class MainWayAutomationPage {
+public class MainPage {
     WebDriver driver;
-
-    public MainWayAutomationPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
-    }
-
 
     // баннер на главной
     @FindBy(xpath = "//div[@class='dialog-widget-content dialog-lightbox-widget-content animated']")
@@ -29,7 +21,6 @@ public class MainWayAutomationPage {
 
     // хидер с контактами
     @FindBy(xpath = "//div[@class='ast-above-header-bar ast-above-header  site-header-focus-item']")
-    //или вот такой //ul[contains(@class,'elementor-icon-list-items elementor-inline-items')]
     private WebElement headerOnHomePage;
 
     // Номер 1
@@ -51,6 +42,11 @@ public class MainWayAutomationPage {
     // email
     @FindBy(xpath = "//li[contains(@class,'elementor-icon-list-item elementor-inline-item')]//span[contains(@class,'elementor-icon-list-text')][normalize-space()='trainer@way2automation.com']")
     private WebElement emailAdress;
+
+    // иконки соцсетй
+    @FindBy(xpath = "//div[@class='site-header-above-section-right site-header-section ast-flex ast-grid-right-section']")
+    private WebElement socialNetwork;
+
 
     // горизонтальное меню
     @FindBy(xpath = "//div[contains(@class,'site-header-primary-section-right')]//nav[@id='site-navigation']")
@@ -90,9 +86,9 @@ public class MainWayAutomationPage {
     @FindBy(xpath = "//div[@data-id='42038e01']")
     private WebElement rahulAroraText;
 
-//ИЛИ Rahul Arora текст / фото
-@FindBy(xpath = "//div[@data-id='7037673b']")
-private WebElement rahulAroraFounder;
+    //ИЛИ Rahul Arora текст / фото
+    @FindBy(xpath = "//div[@data-id='7037673b']")
+    private WebElement rahulAroraFounder;
 
 
     // мы гордимся
@@ -129,8 +125,22 @@ private WebElement rahulAroraFounder;
      private WebElement mainMenuOnScroll;
      //найти!
 
+    //методы
 
+    public MainPage(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
     }
+
+    public boolean headerDisplayed() {
+        return headerOnHomePage.isDisplayed();
+    }
+
+    public boolean footerDisplayed() {
+        return footerOnHomePage.isDisplayed();
+    }
+
+}
 
 
 
