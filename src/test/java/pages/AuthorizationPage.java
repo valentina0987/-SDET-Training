@@ -25,8 +25,8 @@ public class AuthorizationPage {
     private WebElement loginButton;
 
     // вы вошли!
-    @FindBy(xpath = "//p[normalize-space()=\"You're logged in!!\"]")
-    private WebElement youLogged;
+    @FindBy(xpath = "//p[@class='ng-scope']")
+    private WebElement loginСonfirmText;
 
 
     public AuthorizationPage(WebDriver driver) {
@@ -42,10 +42,9 @@ public class AuthorizationPage {
         usernameDescription.clear();
         usernameDescription.sendKeys("angular student");
         loginButton.click();
-        youLoggedDisplayed();
     }
 
-    public boolean youLoggedDisplayed() {
-        return youLogged.isDisplayed();
+    public String getLoginСonfirmText() {
+        return loginСonfirmText.getText();
     }
 }

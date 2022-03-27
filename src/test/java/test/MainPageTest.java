@@ -1,6 +1,10 @@
 package test;
 
+import org.junit.Assert;
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import pages.AfterAuthorizationPage;
 import pages.MainPage;
 import static java.lang.Thread.sleep;
@@ -14,22 +18,24 @@ public class MainPageTest extends TestBase {
     public void headerWithContactsTest() throws InterruptedException {
         MainPage mainPage = new MainPage(driver);
         mainPage.headerDisplayed();
-        mainPage.phoneNumberOneDisplayed();
-        mainPage.phoneNumberTwoDisplayed();
-        mainPage.phoneNumberThreeDisplayed();
-        mainPage.skypeNumberDisplayed();
-        mainPage.emailAdressDisplayed();
-        mainPage.socialNetworkDisplayed();
+        Assert.assertEquals("+919711-111-558", mainPage.getContacts().get(0));
+        Assert.assertEquals("+919711-191-558", mainPage.getContacts().get(1));
+        Assert.assertEquals("+1 646-480-0603", mainPage.getContacts().get(2));
+//        mainPage.phoneNumberTwoDisplayed();
+//        mainPage.phoneNumberThreeDisplayed();
+//        mainPage.skypeNumberDisplayed();
+//        mainPage.emailAdressDisplayed();
+//        mainPage.socialNetworkDisplayed();
     }
 
     @Test
     public void horizontalMenuTest() throws InterruptedException {
         MainPage mainPage = new MainPage(driver);
-        mainPage.horizontalMenuDisplayed();
+        Assert.assertTrue(mainPage.horizontalMenuDisplayed());
     }
 
     @Test
-    public void sliderBlockTest() throws InterruptedException {
+    public void sliderBlockTest()  {
         MainPage mainPage = new MainPage(driver);
         mainPage.sliderBlockDisplayed();
     }
@@ -139,6 +145,6 @@ public class MainPageTest extends TestBase {
     public void sliderScrollingTest() throws InterruptedException {
         MainPage mainPage = new MainPage(driver);
         mainPage.checksliderScrolling();
-        sleep(30000);
+
     }
 }

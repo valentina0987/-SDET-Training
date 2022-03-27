@@ -1,18 +1,30 @@
 package pages;
 
+import com.github.javafaker.Faker;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static java.lang.Thread.sleep;
 
 public class MainPage {
     WebDriver driver;
+
+    Faker faker = new Faker();
+    String name = faker.name().fullName();
+    String email = faker.internet().emailAddress();
+    String password = faker.internet().password();
 
     // баннер на главной
     @FindBy(xpath = "//div[@class='dialog-widget-content dialog-lightbox-widget-content animated']")
@@ -27,8 +39,10 @@ public class MainPage {
     private WebElement headerOnHomePage;
 
     // Номер 1
-    @FindBy(xpath = "//span[normalize-space()='+919711-111-558']")
-    private WebElement phoneNumberOne;
+    @FindBy(xpath = "//ul[@class='elementor-icon-list-items elementor-inline-items']//span[@class='elementor-icon-list-text']")
+    private WebElement contacts;
+
+
 
     // Номер 2
     @FindBy(xpath = "//span[normalize-space()='+919711-191-558']")
@@ -59,14 +73,14 @@ public class MainPage {
     private WebElement sliderBlock;
 
     //слайд 1
-    @FindBy(xpath = "//div[@class='swiper-wrapper elementor-slides']//div[@data-swiper-slide-index='0'][2]")
-    private WebElement slideOne;
+    @FindBy(css = "div[class='elementor-repeater-item-3e1c409 swiper-slide swiper-slide-active'] div[class='swiper-slide-contents']")
+    private WebElement firstSlide;
 
     ////div[@class='elementor-slide-heading'][normalize-space()='3 New Automation Batches starting']
 
     //слайд 2
-    @FindBy(xpath = "//div[@class='swiper-wrapper elementor-slides']//div[@data-swiper-slide-index='1'][2]")
-    private WebElement slideTwo;
+    @FindBy(css = "div[class='elementor-repeater-item-2c17d9c swiper-slide swiper-slide-active'] div[class='swiper-slide-contents']")
+    private WebElement secondSlide;
     ////div[@class='elementor-slide-heading'][normalize-space()='LIFETIME MEMBERSHIP CLUB']
 
     // блок сертификатов
@@ -163,11 +177,11 @@ public class MainPage {
         memberLogin.click();
         createAccount.click();
         fullNameField.clear();
-        fullNameField.sendKeys("Kill Bill");
+        fullNameField.sendKeys(name);
         emailField.clear();
-        emailField.sendKeys("Sisofttt@yandex.ru");
+        emailField.sendKeys(email);
         fieldPassword.clear();
-        fieldPassword.sendKeys("Sisofttest");
+        fieldPassword.sendKeys(password);
         checkAgree.click();
         signUpButton.click();
     }
@@ -209,8 +223,13 @@ public class MainPage {
             return headerOnHomePage.isDisplayed();
         }
 
-        public boolean phoneNumberOneDisplayed() {
-            return phoneNumberOne.isDisplayed();
+        public List getContacts() {
+            ArrayList<String> contacts = new ArrayList<>();
+            List<WebElement> listOfElements = driver.findElements(By.xpath("//ul[@class='elementor-icon-list-items elementor-inline-items']//span[@class='elementor-icon-list-text']"));
+            for (WebElement e : listOfElements) {
+                contacts.add(e.getText());
+            }
+            return contacts;
         }
 
         public boolean phoneNumberTwoDisplayed() {
@@ -241,9 +260,9 @@ public class MainPage {
             return sliderBlock.isDisplayed();
         }
 
-        public boolean slideOneDisplayed() { return slideOne.isDisplayed(); }
-
-        public boolean slideTwoDisplayed() { return slideTwo.isDisplayed(); }
+//        public boolean slideOneDisplayed() { return slideOne.isDisplayed(); }
+//
+//        public boolean slideTwoDisplayed() { return slideTwo.isDisplayed(); }
 
         public boolean certificateBlockDisplayed() {
             return certificateBlock.isDisplayed();
@@ -290,15 +309,18 @@ public class MainPage {
         }
 
         // провeрка, что у блока-слайдера работает скроллинг
-        public void checksliderScrolling() {
-            //WebElement element = driver.findElement(By.xpath("//div[@data-id='155c094d']"));
-            //((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
-            slideTwo.isDisplayed();
-            new WebDriverWait(driver, 200);
-            //((JavascriptExecutor) driver).executeScript("scroll(0,300)");
-            //JavascriptExecutor js = (JavascriptExecutor) driver;
-            //js.executeScript("window.scrollBy(6000,50)");
-            slideTwo.isDisplayed();
+        public void checksliderScrolling() throws InterruptedException {
+//            WebElement element = driver.findElement(By.xpath("//body/div[@id='page']/div[@id='content']/div[@class='ast-container']/div[@id='primary']/main[@id='main']/article[@id='post-17']/div[@class='entry-content clear']/div[@class='elementor elementor-17']/div[@class='elementor-section-wrap']/section[@class='elementor-section elementor-top-section elementor-element elementor-element-1e537621 elementor-section-boxed elementor-section-height-default elementor-section-height-default']/div[@class='elementor-container elementor-column-gap-default']/div[@class='elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-259f3103']/div[1]"));
+//            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
+//            sleep(5000);
+//            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", horizontalMenu);
+            Actions actionProvider = new Actions(driver);
+//            WebElement slide = driver.findElement(By.xpath("//div[@class='elementor-repeater-item-3e1c409 swiper-slide swiper-slide-active']//div[@class='swiper-slide-inner']"));
+//            WebElement logo = driver.findElement(By.xpath("//img[@id='MzQ3OjY4Mg==-1']"));
+            actionProvider.moveToElement(firstSlide).build().perform();
+            actionProvider.clickAndHold(firstSlide).build().perform();
+            firstSlide.isDisplayed();
+            secondSlide.isDisplayed();
         }
 
     // проверка, что блока с курсами работает слайдер
