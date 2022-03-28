@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static java.lang.Thread.sleep;
 
 public class MainPage {
     WebDriver driver;
@@ -41,8 +40,6 @@ public class MainPage {
     // Номер 1
     @FindBy(xpath = "//ul[@class='elementor-icon-list-items elementor-inline-items']//span[@class='elementor-icon-list-text']")
     private WebElement contacts;
-
-
 
     // Номер 2
     @FindBy(xpath = "//span[normalize-space()='+919711-191-558']")
@@ -90,6 +87,16 @@ public class MainPage {
     // блок курсов
     @FindBy(xpath = "//section[@data-id='166618a']")
     private WebElement trainingCoursesBlock;
+
+    @FindBy(xpath = "//div[@class='swiper-slide swiper-slide-active']//img[@id='NjU0OjEyMw==-1']")
+    private WebElement trainingCoursesSlideOne;
+
+    @FindBy(xpath = "//div[@class='swiper-slide swiper-slide-active']//img[@id='NjU0OjEyMw==-1']")
+    private WebElement trainingCoursesSlideTwo;
+
+    @FindBy(xpath = "//i[@class='fas fa-angle-right']")
+    private WebElement flipThroughSlidesButton;
+
 
     // запись видео
     @FindBy(xpath = "//img[@id='MTA3Mjo1Mzk=-1']")
@@ -165,6 +172,15 @@ public class MainPage {
     @FindBy(xpath = "//input[@id='email']")
     private WebElement userEmailField;
 
+    // пункт меню Resources
+    @FindBy(xpath = "//li[@id='menu-item-27617']//span[@class='sub-arrow']")
+    private WebElement menuResources;
+
+    @FindBy(xpath = "//li[@id='menu-item-27618']//span[@class='menu-text']")
+    private WebElement pagePracticeSiteOne;
+
+
+
 
     //методы
 
@@ -212,7 +228,7 @@ public class MainPage {
     }
 
     public boolean advertisingWindowDisplayed() {
-        new WebDriverWait(driver, 30)
+        new WebDriverWait(driver, 40)
                 .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='dialog-widget-content dialog-lightbox-widget-content animated']")));
         return bannerOnHomePage.isDisplayed();
     }
@@ -232,26 +248,6 @@ public class MainPage {
             return contacts;
         }
 
-        public boolean phoneNumberTwoDisplayed() {
-            return phoneNumberTwo.isDisplayed();
-        }
-
-        public boolean phoneNumberThreeDisplayed() {
-            return phoneNumberThree.isDisplayed();
-        }
-
-        public boolean skypeNumberDisplayed() {
-            return skypeNumber.isDisplayed();
-        }
-
-        public boolean emailAdressDisplayed() {
-            return emailAdress.isDisplayed();
-        }
-
-        public boolean socialNetworkDisplayed() {
-            return socialNetwork.isDisplayed();
-        }
-
         public boolean horizontalMenuDisplayed() {
             return horizontalMenu.isDisplayed();
         }
@@ -259,10 +255,6 @@ public class MainPage {
         public boolean sliderBlockDisplayed() {
             return sliderBlock.isDisplayed();
         }
-
-//        public boolean slideOneDisplayed() { return slideOne.isDisplayed(); }
-//
-//        public boolean slideTwoDisplayed() { return slideTwo.isDisplayed(); }
 
         public boolean certificateBlockDisplayed() {
             return certificateBlock.isDisplayed();
@@ -308,23 +300,13 @@ public class MainPage {
             return footerOnHomePage.isDisplayed();
         }
 
-        // провeрка, что у блока-слайдера работает скроллинг
-        public void checksliderScrolling() throws InterruptedException {
-//            WebElement element = driver.findElement(By.xpath("//body/div[@id='page']/div[@id='content']/div[@class='ast-container']/div[@id='primary']/main[@id='main']/article[@id='post-17']/div[@class='entry-content clear']/div[@class='elementor elementor-17']/div[@class='elementor-section-wrap']/section[@class='elementor-section elementor-top-section elementor-element elementor-element-1e537621 elementor-section-boxed elementor-section-height-default elementor-section-height-default']/div[@class='elementor-container elementor-column-gap-default']/div[@class='elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-259f3103']/div[1]"));
-//            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
-//            sleep(5000);
-//            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", horizontalMenu);
-            Actions actionProvider = new Actions(driver);
-//            WebElement slide = driver.findElement(By.xpath("//div[@class='elementor-repeater-item-3e1c409 swiper-slide swiper-slide-active']//div[@class='swiper-slide-inner']"));
-//            WebElement logo = driver.findElement(By.xpath("//img[@id='MzQ3OjY4Mg==-1']"));
-            actionProvider.moveToElement(firstSlide).build().perform();
-            actionProvider.clickAndHold(firstSlide).build().perform();
-            firstSlide.isDisplayed();
-            secondSlide.isDisplayed();
-        }
 
-    // проверка, что блока с курсами работает слайдер
 
+ // проверка, что работает переход по меню на любую из страниц
+    public void ResourcesPageTransition() {
+        menuResources.click();
+        pagePracticeSiteOne.click();
+    }
     }
 
 
