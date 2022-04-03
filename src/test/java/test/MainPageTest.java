@@ -2,17 +2,14 @@ package test;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.JavascriptExecutor;
 import pages.AfterAuthorizationPage;
 import pages.MainPage;
 import pages.PracticeSiteOnePage;
-
 import static org.junit.Assert.assertEquals;
 
 public class MainPageTest extends TestBase {
 
 
-    // проверяем наличие элементов на главной странице
     @Test
     public void headerWithContactsTest() {
         MainPage mainPage = new MainPage(driver);
@@ -97,7 +94,6 @@ public class MainPageTest extends TestBase {
         Assert.assertTrue(mainPage.footerDisplayed());
     }
 
-    // проверяем, что основное меню отображается в шапке при скроллинге
     @Test
     public void menuOnScrollingTest() {
         MainPage mainPage = new MainPage(driver);
@@ -105,7 +101,6 @@ public class MainPageTest extends TestBase {
         Assert.assertTrue(mainPage.mainMenuOnScrollDisplayed());
     }
 
-    // проверяем, что есть рекламное окно
     @Test
     public void advertisingWindowTest() {
         MainPage mainPage = new MainPage(driver);
@@ -113,7 +108,6 @@ public class MainPageTest extends TestBase {
         Assert.assertTrue(mainPage.advertisingWindowDisplayed());
     }
 
-    // проверяем, что прошли регистрацию на странице https://www.way2automation.com/ и перешли на https://www.selenium-tutorial.com/
     @Test
     public void RegistrationTest() {
         MainPage mainPage = new MainPage(driver);
@@ -125,20 +119,16 @@ public class MainPageTest extends TestBase {
         Assert.assertEquals(firstUrl, secondUrl);
     }
 
-    // проверяем, что прошли авторизацию на странице https://www.way2automation.com/ и перешли на https://www.selenium-tutorial.com/
     @Test
     public void lodInTest() {
         MainPage mainPage = new MainPage(driver);
-        mainPage.checkLogIn();
+        mainPage.checkLogIn("Sisofttest@yandex.ru", "Sisofttest");
         String expectedResult = "https://www.selenium-tutorial.com/";
         AfterAuthorizationPage authorizationPage = new AfterAuthorizationPage(driver);
         String actualResult = authorizationPage.getUrl();
-        System.out.println(authorizationPage.getUrl());
         assertEquals(expectedResult, actualResult);
     }
 
-
-    // проверяем переход по меню на любую из страниц
     @Test
     public void menuPagesNavigation() {
         MainPage mainPage = new MainPage(driver);
